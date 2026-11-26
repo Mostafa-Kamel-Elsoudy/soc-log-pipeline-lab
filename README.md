@@ -33,6 +33,7 @@ Target: Ubuntu 22.04 or 24.04 LTS, single host, 16 GB RAM. This is a lab build. 
 | `systemd/watchsoc-ingest.service` | Hardened unit for the ingest API |
 | `nginx/watchsoc-proxy.conf` | TLS 1.2/1.3 termination, rate limits, WebSocket upgrade for Dashboards |
 | `scripts/generate-dev-certs.sh` | Self-signed certificate with openssl |
+| `scripts/validate-configs.sh` | Config validators and cross-file path and port checks |
 | `security/apparmor/usr.bin.watchsoc-ingest` | Named AppArmor profile for the ingest service |
 | `security/ufw-setup.sh` | Idempotent firewall policy, supports `--dry-run` |
 | `runbooks/OPERATIONAL_RUNBOOK.md` | On-call procedures |
@@ -123,6 +124,10 @@ bash -n scripts/generate-dev-certs.sh security/ufw-setup.sh
 security/ufw-setup.sh --dry-run
 systemd-analyze verify systemd/watchsoc-ingest.service
 apparmor_parser -Q -K -S security/apparmor/usr.bin.watchsoc-ingest > /dev/null
+
+# Runs every installed validator (nginx -t, rsyslogd -N1, apparmor_parser, systemd-analyze,
+# docker compose config) plus path and port cross-checks between files. Needs no root.
+scripts/validate-configs.sh
 ```
 
 ## Limits
