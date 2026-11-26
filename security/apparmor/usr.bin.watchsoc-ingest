@@ -14,10 +14,8 @@ profile watchsoc-ingest flags=(attach_disconnected) {
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
 
-  capability dac_read_search,
-
   # Runtime and application code.
-  /usr/bin/node                          mr,
+  /usr/bin/node                          mrix,
   /usr/lib/** mr,
   /lib/** mr,
   /opt/watchsoc-ingest/**                r,
@@ -26,6 +24,7 @@ profile watchsoc-ingest flags=(attach_disconnected) {
   # Node reads these on startup.
   /proc/sys/kernel/random/uuid           r,
   /proc/sys/vm/overcommit_memory         r,
+  /proc/sys/net/core/somaxconn           r,
   /proc/meminfo                          r,
   /proc/cpuinfo                          r,
   /proc/self/** r,
@@ -37,6 +36,8 @@ profile watchsoc-ingest flags=(attach_disconnected) {
   /etc/ca-certificates/**                r,
   /etc/resolv.conf                       r,
   /etc/hosts                             r,
+  /etc/localtime                         r,
+  /usr/share/zoneinfo/**                 r,
   /etc/nsswitch.conf                     r,
 
   # TCP only. AppArmor cannot filter by address: the loopback restriction

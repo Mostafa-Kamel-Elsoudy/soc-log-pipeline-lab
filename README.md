@@ -59,7 +59,8 @@ curl -s http://127.0.0.1:9200/_cluster/health?pretty
 sudo useradd --system --no-create-home --shell /usr/sbin/nologin watchsoc
 sudo install -d -o root -g root /opt/watchsoc-ingest
 sudo cp ingest-api/server.js ingest-api/package.json /opt/watchsoc-ingest/
-sudo install -o watchsoc -g watchsoc -m 0640 /dev/null /var/log/watchsoc-ingest.log
+# group adm so rsyslog (user syslog, group adm) can read what the service writes
+sudo install -o watchsoc -g adm -m 0640 /dev/null /var/log/watchsoc-ingest.log
 sudo cp systemd/watchsoc-ingest.service /etc/systemd/system/
 
 # 5. AppArmor (load in complain mode first, then enforce)
