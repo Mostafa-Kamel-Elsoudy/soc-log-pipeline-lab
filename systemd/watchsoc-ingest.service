@@ -25,6 +25,7 @@ ProtectControlGroups=true
 RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 CapabilityBoundingSet=
 UMask=0027
+AppArmorProfile=watchsoc-ingest
 
 [Install]
 WantedBy=multi-user.target
