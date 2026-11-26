@@ -1,0 +1,13 @@
+{
+  "name": "watchsoc-ingest",
+  "version": "1.0.0",
+  "description": "Minimal tenant event ingest API for the SOC log pipeline lab",
+  "main": "server.js",
+  "license": "MIT",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,30 @@
+[Unit]
+Description=WatchSOC ingest API
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=watchsoc
+Group=watchsoc
+WorkingDirectory=/opt/watchsoc-ingest
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+Environment=OPENSEARCH_URL=http://127.0.0.1:9200
+Environment=WATCHSOC_EVENT_LOG=/var/log/watchsoc-ingest.log
+ExecStart=/usr/bin/node /opt/watchsoc-ingest/server.js
+Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/log
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
